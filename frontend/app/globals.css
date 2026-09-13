@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "leaflet/dist/leaflet.css";
+
+
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-ink-950 text-slate-200 antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+
+/* light mode (html.light toggled by theme store) */
+html.light {
+  color-scheme: light;
+}
+html.light body {
+  @apply bg-slate-100 text-slate-800;
+}
+html.light .panel {
+  @apply border-slate-300 bg-white;
+}
+html.light .panel-subtle {
+  @apply border-slate-200 bg-slate-50;
+}
+html.light .text-dim {
+  @apply text-slate-500;
+}
+html.light .input-base {
+  @apply border-slate-300 bg-white text-slate-800 placeholder:text-slate-400;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-ink-600;
+}
+html.light ::-webkit-scrollbar-thumb {
+  @apply bg-slate-300;
+}
+
+.panel {
+  @apply rounded-lg border border-ink-700/70 bg-ink-900/70;
+}
+
+.panel-subtle {
+  @apply rounded-lg border border-ink-700/50 bg-ink-850/60;
+}
+
+.text-dim {
+  @apply text-slate-400;
+}
+
+.input-base {
+  @apply w-full rounded-md border border-ink-600 bg-ink-850 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-signal focus:ring-1 focus:ring-signal/40;
+}
+
+.focus-ring {
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal;
+}
+
+/* Leaflet tweaks for the command-center look */
+.leaflet-container {
+  background: #0a1220;
+  font-family: inherit;
+}
+html.light .leaflet-container {
+  background: #e2e8f0;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #111c30;
+  color: #e2e8f0;
+  border: 1px solid #243654;
+}
+html.light .leaflet-popup-content-wrapper,
+html.light .leaflet-popup-tip {
+  background: white;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+.marker-pulse {
+  border-radius: 9999px;
+  box-shadow: 0 0 0 rgba(56, 189, 248, 0.6);
+  animation: markerpulse 2.2s ease-out infinite;
+}
+@keyframes markerpulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(56, 189, 248, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+  }
+}

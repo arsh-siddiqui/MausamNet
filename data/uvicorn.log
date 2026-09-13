@@ -1,0 +1,13 @@
+INFO:     Started server process [23936]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8600 (Press CTRL+C to quit)
+INFO:     127.0.0.1:10812 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:10813 - "POST /api/ai/analyze-media HTTP/1.1" 200 OK
+INFO:     127.0.0.1:26946 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:26947 - "GET /api/verification/queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:26949 - "GET /api/verification/queue HTTP/1.1" 200 OK
+INFO:     127.0.0.1:26950 - "POST /api/verification/26c23499-6997-48d5-af3f-67b882cca643/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:26951 - "POST /api/ground-reports HTTP/1.1" 201 Created
+INFO:     127.0.0.1:26952 - "GET /api/realtime/events?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3NDBiMzg4YS02Mzg1LTRhMzEtOTM4OS0yMGZlMGExNjIzYjYiLCJleHAiOjE3ODkyNDA3NjYsInR5cGUiOiJhY2Nlc3MifQ.hcngxn8srKpEiKTJiQPyRlxQ5igoQGWTfECy8RjgED0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36952 - "POST /api/simulation/reset HTTP/1.1" 200 OK

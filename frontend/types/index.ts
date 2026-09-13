@@ -231,6 +231,7 @@ export interface MapPoint {
   state?: string | null;
   district?: string | null;
   city?: string | null;
+  fusion?: { explanations?: string[] } | null;
 }
 
 export interface AnalyticsOverview {

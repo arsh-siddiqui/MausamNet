@@ -1,6 +1,7 @@
 /** Typed API client. All frontend data flows through here → backend API →
  * services → repositories → SQLite. Swap the backend without UI changes. */
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8600";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
+export const REALTIME_URL = process.env.NEXT_PUBLIC_REALTIME_URL || API_URL;
 
 const TOKEN_KEY = "mausamnet.token";
 const USER_KEY = "mausamnet.user";

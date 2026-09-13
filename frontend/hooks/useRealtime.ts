@@ -4,7 +4,7 @@
  * TanStack Query invalidation, toast notifications and the simulation store. */
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { getToken, API_URL } from "@/lib/api";
+import { getToken, REALTIME_URL } from "@/lib/api";
 import { useSimulationStore } from "@/stores/simulation";
 
 export interface RealtimeAlert {
@@ -34,7 +34,7 @@ export function useRealtime(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return;
     const token = getToken();
-    const url = `${API_URL}/api/realtime/events${token ? `?token=${encodeURIComponent(token)}` : ""}`;
+    const url = `${REALTIME_URL}/api/realtime/events${token ? `?token=${encodeURIComponent(token)}` : ""}`;
     const es = new EventSource(url);
     esRef.current = es;
 

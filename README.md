@@ -6,7 +6,7 @@
 
 MausamNet is an AI-powered national weather-event intelligence and verification platform. Instead of acting as a simple weather-monitoring dashboard, MausamNet is designed to ingest fragmented information from multiple heterogeneous sources, combine those signals, detect emerging weather events, identify anomalies and potentially recycled media, and send critical events to a **human verification workflow**.
 
-> **MausamNet does not blindly trust one source. It builds confidence by correlating multiple independent pieces of evidence.**
+> **SIH Prototype Notice.** This build runs locally with SQLite and integrates **real APIs** (Open-Meteo for live weather data and NewsAPI for live local news signals). Confidence scores are analytical indicators and do not replace official meteorological warnings or authorized disaster-management decisions.
 
 ---
 
@@ -99,7 +99,7 @@ python -m uvicorn app.main:app --port 8600
 ```bash
 cd frontend
 npm install
-cp .env.local.example .env.local     # points at http://127.0.0.1:8600
+cp .env.example .env.local     # points at your backend url
 npm run dev                          # http://localhost:3000
 ```
 
@@ -108,7 +108,21 @@ Credentials are automatically served by the `/api/auth/demo-accounts` endpoint. 
 
 ---
 
-## 5. Module Map
+## 6. Environment Variables
+
+See the `.env.example` files in both `/backend` and `/frontend` for all supported settings.
+
+## 7. Production Deployment
+
+MausamNet is designed to deploy cleanly to **Vercel** (Frontend) and **Render** (Backend).
+
+Please see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for step-by-step instructions.
+
+A `render.yaml` file is provided for automatic backend blueprint provisioning.
+
+---
+
+## 8. Module Map
 
 | Area | What it does |
 |---|---|
@@ -121,17 +135,3 @@ Credentials are automatically served by the `/api/auth/demo-accounts` endpoint. 
 | **Analytics** | Provides national trends, source analysis, severity and state intelligence |
 | **Verification Center**| Enables human investigation and final verification workflow (Analyst vs Verifier RBAC) |
 | **Ground Evidence** | Collects citizen observations as supporting evidence |
-
----
-
-## 6. Environment Variables
-
-Copy `.env.example` → `.env`. **Nothing is required to run the prototype**, but configuring these enables live real-world integrations (like NewsAPI and Open-Meteo).
-
-```env
-JWT_SECRET=            # set before any real deployment
-DATABASE_URL=          # prototype auto-uses SQLite
-NEWS_API_URL=https://newsapi.org/v2/everything
-OPENMETEO_URL=https://api.open-meteo.com/v1/forecast
-SEED_SIGNAL_COUNT=18000
-```

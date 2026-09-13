@@ -48,7 +48,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=[settings.frontend_url, "http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -95,9 +95,9 @@ async def realtime_events(request: Request, token: str = ""):
     return EventSourceResponse(stream())
 
 
-@app.get("/api/health")
-async def public_health():
-    return {"status": "ok", "app": settings.app_name, "version": settings.app_version, "environment": settings.environment}
+@app.get("/api/system/health")
+async def system_health():
+    return {"status": "ok", "database": "ok", "environment": settings.environment}
 
 
 @app.get("/")

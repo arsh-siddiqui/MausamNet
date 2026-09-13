@@ -10,6 +10,7 @@ import os
 from functools import lru_cache
 from pathlib import Path
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,7 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     environment: str = "prototype"
     api_prefix: str = "/api"
+    frontend_url: str = "http://localhost:3000"
 
     # --- security -------------------------------------------------
     jwt_secret: str = "mausamnet-prototype-secret-do-not-use-in-production"
@@ -59,6 +61,12 @@ class Settings(BaseSettings):
     # --- simulation ------------------------------------------------
     simulation_default_speed: float = 1.0
     seed_signal_count: int = 18000
+
+    @model_validator(mode="after")
+    def check_jwt_secret(self):
+        if self.environment.lower() == "production" and self.jwt_secret == "mausamnet-prototype-secret-do-not-use-in-production":
+            raise ValueError("Insecure JWT_SECRET used in production environment.")
+        return self
 
 
 @lru_cache

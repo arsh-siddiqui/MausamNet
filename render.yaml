@@ -11,7 +11,7 @@ services:
       - key: DEMO_MODE
         value: "true"
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.12.0
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL

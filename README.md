@@ -1,6 +1,9 @@
 # 🌦️ MausamNet
 
-## National Weather-Event Intelligence and Verification Platform
+![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript)
 
 **SIH26069 — National Weather Big Data Analytics**
 
@@ -72,13 +75,19 @@ MausamNet solves the problem of disparate data by performing **intelligence + co
                   AUDIT TRAIL
 ```
 
-- **Frontend:** Next.js 14, React 18, TypeScript, Tailwind CSS, TanStack Query, Leaflet, Recharts, Framer Motion.
+- **Frontend:** Next.js 14 (Turbopack), React 18, TypeScript, Tailwind CSS, TanStack Query, Leaflet, Recharts, Framer Motion.
 - **Backend:** Python 3.11+, FastAPI, Pydantic v2, SQLAlchemy 2, SQLite (WAL for real-time reads).
 - **AI/Forensics:** Pluggable interfaces (`DemoEventClassifier`, `MediaAnalyzer` using aHash, `StatisticalAnomalyDetector`).
 
 ---
 
 ## 4. Running locally
+
+### Environment Variables
+
+To run locally, you will need to setup environment variables in the root directory and in the frontend:
+- **Root Directory (`.env`)**: Ensure `FRONTEND_URL=http://localhost:3000` is set for CORS.
+- **Frontend Directory (`frontend/.env.local`)**: Ensure `NEXT_PUBLIC_API_URL=http://127.0.0.1:8600` is set to point to the backend.
 
 ### Backend
 
@@ -89,30 +98,28 @@ pip install -r requirements.txt
 # initialize + seed the demo database (deterministic)
 python ../scripts/seed_database.py
 
-# run the API (defaults documented below)
+# run the API on port 8600
 python -m uvicorn app.main:app --port 8600
 ```
 *The database auto-creates at `backend/database/mausamnet.db`.*
 
 ### Frontend
 
+The frontend has been updated to use **Turbopack** for ultra-fast development compilation.
+
 ```bash
 cd frontend
 npm install
-cp .env.example .env.local     # points at your backend url
-npm run dev                          # http://localhost:3000
+npm run dev
 ```
+*The frontend will run on `http://localhost:3000`.*
 
 ### Demo Logins
 Credentials are automatically served by the `/api/auth/demo-accounts` endpoint. You can click **Launch Analyst / Verifier / Admin Demo** directly on the `/login` screen without typing passwords.
 
 ---
 
-## 6. Environment Variables
-
-See the `.env.example` files in both `/backend` and `/frontend` for all supported settings.
-
-## 7. Production Deployment
+## 5. Production Deployment
 
 MausamNet is designed to deploy cleanly to **Vercel** (Frontend) and **Render** (Backend).
 
@@ -122,7 +129,7 @@ A `render.yaml` file is provided for automatic backend blueprint provisioning.
 
 ---
 
-## 8. Module Map
+## 6. Module Map
 
 | Area | What it does |
 |---|---|

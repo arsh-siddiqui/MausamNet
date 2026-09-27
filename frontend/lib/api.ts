@@ -54,16 +54,26 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     ...(options.headers as Record<string, string>),
   };
   if (!(options.body instanceof FormData)) headers["Content-Type"] = "application/json";
-  if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch(`${API_URL}/api${path}`, { ...options, headers });
-  if (res.status === 401 && typeof window !== "undefined") {
-    clearSession();
-    if (!window.location.pathname.startsWith("/login")) {
-      window.location.href = "/login";
-    }
-    throw new ApiError(401, "Session expired");
+  const isAuthRoute = path.startsWith("/auth/login") || path.startsWith("/auth/register") || path.startsWith("/auth/demo-accounts");
+  if (token && !isAuthRoute) headers["Authorization"] = `Bearer ${token}`;
+
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}/api${path}`, { ...options, headers });
+  } catch (err: any) {
+    throw new ApiError(0, err?.message || "Network error — backend service unavailable");
   }
+
+  if (res.status === 401 && typeof window !== "undefined") {
+    if (!isAuthRoute) {
+      clearSession();
+      if (!window.location.pathname.startsWith("/login")) {
+        window.location.href = "/login";
+      }
+    }
+  }
+
   if (!res.ok) {
     let detail = `Request failed (${res.status})`;
     try {

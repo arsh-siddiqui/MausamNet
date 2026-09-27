@@ -33,6 +33,11 @@ def get_engine() -> SimulationEngine:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db()
+    try:
+        from scripts.seed_database import main as seed_main
+        seed_main()
+    except Exception as exc:
+        print("Database seed check on startup:", exc)
     yield
     eng = get_engine()
     if eng._task is not None and not eng._task.done():
@@ -46,9 +51,17 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+allowed_origins = [
+    settings.frontend_url,
+    "https://mausam-net-henna.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.frontend_url, "http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=allowed_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

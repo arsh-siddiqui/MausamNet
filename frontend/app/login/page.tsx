@@ -16,9 +16,9 @@ interface TokenResponseShape {
 }
 
 const FALLBACK_DEMOS: DemoAccount[] = [
-  { email: "analyst@mausamnet.demo", password: "", role: "ANALYST", label: "Launch Analyst Demo" },
-  { email: "verifier@mausamnet.demo", password: "", role: "VERIFIER", label: "Launch Verifier Demo" },
-  { email: "admin@mausamnet.demo", password: "", role: "ADMIN", label: "Launch Admin Demo" },
+  { email: "analyst@mausamnet.demo", password: "demo-analyst-2026", role: "ANALYST", label: "Launch Analyst Demo" },
+  { email: "verifier@mausamnet.demo", password: "demo-verifier-2026", role: "VERIFIER", label: "Launch Verifier Demo" },
+  { email: "admin@mausamnet.demo", password: "demo-admin-2026", role: "ADMIN", label: "Launch Admin Demo" },
 ];
 
 /** Minimal India grid visual for the left panel background. */

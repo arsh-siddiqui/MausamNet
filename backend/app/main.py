@@ -34,10 +34,10 @@ def get_engine() -> SimulationEngine:
 async def lifespan(app: FastAPI):
     init_db()
     try:
-        from scripts.seed_database import main as seed_main
-        seed_main()
+        from app.database.seed import seed_demo_users_and_data
+        seed_demo_users_and_data()
     except Exception as exc:
-        print("Database seed check on startup:", exc)
+        print("[Lifespan Seed Note]", exc)
     yield
     eng = get_engine()
     if eng._task is not None and not eng._task.done():

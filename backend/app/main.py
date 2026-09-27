@@ -95,6 +95,11 @@ async def realtime_events(request: Request, token: str = ""):
     return EventSourceResponse(stream())
 
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+
 @app.get("/api/system/health")
 async def system_health():
     return {"status": "ok", "database": "ok", "environment": settings.environment}

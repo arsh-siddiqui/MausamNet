@@ -98,6 +98,8 @@ def test_alerts_flow(auth_headers, client):
 
 
 def test_sources_and_system(auth_headers, client):
+    assert client.get("/health").status_code == 200
+    assert client.get("/health").json()["status"] == "ok"
     assert client.get("/api/sources", headers=auth_headers).status_code == 200
     h = client.get("/api/system/health", headers=auth_headers)
     assert h.status_code == 200

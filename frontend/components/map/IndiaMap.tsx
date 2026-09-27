@@ -4,10 +4,52 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { Circle, MapContainer, TileLayer, Tooltip, useMap, Marker, GeoJSON } from "react-leaflet";
 import L from "leaflet";
 import useSupercluster from "use-supercluster";
-// @ts-ignore
-import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import { MapPoint, SEVERITY_COLORS } from "@/types";
 import { LayerState } from "./MapToolbar";
+
+function HeatmapLayer({
+  points,
+  radius = 25,
+  blur = 25,
+  gradient = { 0.2: "#3b82f6", 0.4: "#22d3ee", 0.6: "#2dd4bf", 0.8: "#facc15", 1.0: "#ef4444" },
+}: {
+  points: MapPoint[];
+  fitBoundsOnLoad?: boolean;
+  longitudeExtractor?: (m: MapPoint) => number;
+  latitudeExtractor?: (m: MapPoint) => number;
+  intensityExtractor?: (m: MapPoint) => number;
+  radius?: number;
+  blur?: number;
+  gradient?: Record<number, string>;
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || typeof window === "undefined" || points.length === 0) return;
+
+    let layer: any = null;
+
+    import("leaflet.heat").then(() => {
+      if (!map) return;
+      const heatPoints = points.map((p) => [p.latitude, p.longitude, 20]);
+      layer = (L as any).heatLayer(heatPoints, {
+        radius,
+        blur,
+        maxZoom: 18,
+        gradient,
+      });
+      layer.addTo(map);
+    }).catch((err) => console.error("Failed to load leaflet.heat", err));
+
+    return () => {
+      if (layer && map) {
+        map.removeLayer(layer);
+      }
+    };
+  }, [map, points, radius, blur, gradient]);
+
+  return null;
+}
 
 const SEVERITY_RADIUS: Record<string, number> = {
   LOW: 7,

@@ -100,11 +100,6 @@ async def health():
     return {"status": "ok"}
 
 
-@app.get("/api/system/health")
-async def system_health():
-    return {"status": "ok", "database": "ok", "environment": settings.environment}
-
-
 @app.get("/")
 async def root():
     return {"app": settings.app_name, "docs": "/docs", "api": settings.api_prefix}

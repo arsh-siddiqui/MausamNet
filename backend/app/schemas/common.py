@@ -483,6 +483,7 @@ class SystemComponent(BaseModel):
 
 
 class SystemHealthOut(BaseModel):
+    status: str = "ok"
     overall: str
     components: list[SystemComponent]
     version: str

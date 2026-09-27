@@ -269,9 +269,9 @@ def set_source_mode(source_id: str, payload: dict, registry: RegistryDep, user: 
 
 # ------------------------------------------------------------------ system
 @router.get("/system/health", response_model=SystemHealthOut)
-def system_health(system: SystemServiceDep, user: UserOut = Depends(get_current_user)):
+def system_health(system: SystemServiceDep):
     h = system.health()
-    return SystemHealthOut(**h)
+    return SystemHealthOut(status="ok", **h)
 
 
 # ------------------------------------------------------------------ stats helper for landing page
